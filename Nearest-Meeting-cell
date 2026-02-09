@@ -1,0 +1,60 @@
+import java.util.*;
+public class Main
+{    
+    public static int [] bfs(int[] cells , int start){
+        
+        int [] dist = new int[cells.length];
+        Arrays.fill(dist,-1);
+        
+        dist[start] = 0;
+        
+        Queue <Integer> queue = new LinkedList<>();
+        queue.offer(start);
+        
+        while(!queue.isEmpty()){
+            int node = queue.poll();
+            int next = cells[node];
+            
+            if(next != -1 && dist[next] == -1){
+                dist[next] = dist[node] + 1;
+                queue.offer(next);
+            }
+        }
+        
+        return dist;
+    }
+    
+    
+	public static void main(String[] args) {
+	    Scanner scan = new Scanner(System.in);
+	    
+		int size = scan.nextInt();
+		int [] cells = new int[size];
+		
+		for(int i = 0 ; i < size ; i++){
+		    cells[i] = scan.nextInt();
+		}
+		
+		System.out.println("starts");
+		int start1 = scan.nextInt();
+		int start2 = scan.nextInt();
+		
+		int [] dist1 = bfs(cells , start1);
+		int [] dist2 = bfs(cells , start2);
+		
+		int min = Integer.MAX_VALUE;
+
+    //reachable smallest worst case
+
+		for(int i = 0 ; i < size ; i ++){
+		    if(dist2[i] != -1 && dist1[i] != -1){
+		        int max = Math.max(dist2[i],dist1[i]);
+		        if(max < min){
+		            min = max;
+		        }
+		    }
+		}
+		
+	    System.out.println(min);
+	}
+}
